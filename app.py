@@ -1,8 +1,13 @@
-from flask import Flask, jsonify
+from pathlib import Path
+
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 import sqlite3
 
-app = Flask(__name__)
+BASE_DIR = Path(__file__).resolve().parent
+FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
+
+app = Flask(__name__, static_folder=str(FRONTEND_DIST / "assets"), static_url_path="/assets")
 CORS(app)
 
 DATABASE_NAME = "database/transactions.db"
@@ -14,13 +19,25 @@ def get_connection():
     return conn
 
 
-@app.route("/")
-def home():
+def serve_frontend():
+    index_file = FRONTEND_DIST / "index.html"
+    if index_file.exists():
+        return send_from_directory(FRONTEND_DIST, "index.html")
+
     return jsonify({
-        "message": "Threat Detector API Running"
+        "message": "Frontend build not found. Run the frontend build first."
     })
 
 
+@app.route("/")
+@app.route("/<path:path>")
+def home(path=""):
+    if path.startswith("api/"):
+        return jsonify({"message": "Not found"}), 404
+    return serve_frontend()
+
+
+@app.route("/api/transactions")
 @app.route("/transactions")
 def transactions():
 
@@ -40,6 +57,7 @@ def transactions():
     return jsonify(data)
 
 
+@app.route("/api/alerts")
 @app.route("/alerts")
 def alerts():
 
@@ -59,6 +77,7 @@ def alerts():
     return jsonify(data)
 
 
+@app.route("/api/stats")
 @app.route("/stats")
 def stats():
 
