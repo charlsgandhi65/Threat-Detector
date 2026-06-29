@@ -1,0 +1,111 @@
+.timeline {
+  padding: 1.25rem;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.timeline__track {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline__track::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--cyan), rgba(0, 212, 255, 0.1));
+}
+
+.timeline__item {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+}
+
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: -2rem;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  border: 1px solid;
+  background: var(--bg-elevated);
+  z-index: 1;
+}
+
+.timeline__dot--safe {
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+}
+.timeline__dot--medium {
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+.timeline__dot--high {
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.timeline__dot--critical {
+  color: #fca5a5;
+  border-color: rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.2);
+}
+
+.timeline__content {
+  flex: 1;
+  padding: 0.5rem 0.875rem;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition);
+}
+
+.timeline__content:hover {
+  border-color: rgba(0, 212, 255, 0.12);
+}
+
+.timeline__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.timeline__title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.timeline__time {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.timeline__detail {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.timeline__empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}

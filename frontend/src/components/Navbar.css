@@ -1,0 +1,197 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem 0 calc(var(--sidebar-w) + 1rem);
+  background: rgba(6, 10, 20, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+  transition: padding-left var(--transition);
+}
+
+.navbar.navbar--collapsed-pad {
+  padding-left: calc(var(--sidebar-collapsed) + 1rem);
+}
+
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.navbar__logo {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(59, 130, 246, 0.15));
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 10px;
+  color: var(--cyan);
+  font-size: 1.25rem;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+}
+
+.navbar__brand h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.navbar__brand span {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.navbar__center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar__status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.navbar__status--online {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.navbar__status--warning {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.navbar__status--offline {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.navbar__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+.navbar__status--online .navbar__status-dot { background: var(--success); box-shadow: 0 0 8px var(--success); }
+.navbar__status--warning .navbar__status-dot { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+.navbar__status--offline .navbar__status-dot { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar__datetime {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 0.5rem;
+}
+
+.navbar__date {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.navbar__time {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.navbar__icon-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 1.1rem;
+}
+
+.navbar__icon-btn:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.2);
+  color: var(--cyan);
+}
+
+.navbar__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--danger);
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding-left: 1rem;
+  }
+  .navbar__center,
+  .navbar__datetime {
+    display: none;
+  }
+  .navbar__brand span {
+    display: none;
+  }
+}

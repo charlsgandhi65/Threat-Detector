@@ -1,0 +1,138 @@
+.threat-alerts-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.threat-alerts-table__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.threat-alerts-table__count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.threat-alerts-table__count svg {
+  color: #f87171;
+  font-size: 1.1rem;
+}
+
+.threat-alerts-table__filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.threat-alerts-table__filter select {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.threat-alerts-table__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+}
+
+.threat-alerts-table__empty svg {
+  font-size: 2.5rem;
+  opacity: 0.35;
+}
+
+.threat-alerts-table__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.threat-alert-card {
+  padding: 1.25rem;
+  border-left: 3px solid;
+}
+
+.threat-alert-card--high {
+  border-left-color: #f87171;
+}
+
+.threat-alert-card--critical {
+  border-left-color: #dc2626;
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.1);
+}
+
+.threat-alert-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.threat-alert-card__score {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f87171;
+}
+
+.threat-alert-card__customer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.threat-alert-card__customer svg {
+  color: var(--text-muted);
+}
+
+.threat-alert-card__amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cyan);
+  margin-bottom: 0.75rem;
+}
+
+.threat-alert-card__reason {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  padding: 0.65rem 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+}
+
+.threat-alert-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.threat-alert-card__meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}

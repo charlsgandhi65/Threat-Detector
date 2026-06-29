@@ -1,0 +1,58 @@
+.system-health {
+  padding: 1.25rem;
+}
+
+.system-health__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.health-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition);
+}
+
+.health-item:hover {
+  border-color: rgba(0, 212, 255, 0.12);
+}
+
+.health-item__left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.health-item__icon {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.health-item__label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.health-item__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.health-item__status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.health-item__status--online { color: #34d399; }
+.health-item__status--warning { color: #fbbf24; }
+.health-item__status--offline { color: #f87171; }

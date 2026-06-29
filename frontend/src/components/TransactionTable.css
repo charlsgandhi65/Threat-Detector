@@ -1,0 +1,205 @@
+.tx-table {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tx-table__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tx-table__search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+
+.tx-table__search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+.tx-table__search input::placeholder {
+  color: var(--text-muted);
+}
+
+.tx-table__filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.tx-table__filters select {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+.tx-table__sort-btn {
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.tx-table__sort-btn:hover {
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--cyan);
+  border-color: rgba(0, 212, 255, 0.2);
+}
+
+.tx-table__wrap {
+  overflow-x: auto;
+}
+
+.tx-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.tx-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.tx-table th {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(8, 12, 24, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+
+.tx-table th:hover {
+  color: var(--cyan);
+}
+
+.tx-table__sort {
+  opacity: 0.4;
+  margin-left: 0.25rem;
+  font-size: 0.65rem;
+}
+
+.tx-table__sort.active {
+  opacity: 1;
+  color: var(--cyan);
+}
+
+.tx-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+}
+
+.tx-table tbody tr {
+  transition: background var(--transition);
+}
+
+.tx-table__row--clickable {
+  cursor: pointer;
+}
+
+.tx-table tbody tr:hover {
+  background: rgba(0, 212, 255, 0.04);
+}
+
+.tx-table__type {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.tx-table__risk {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tx-table__time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.tx-table__empty {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.tx-table__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.tx-table__pages {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tx-table__pages button {
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.tx-table__pages button:hover:not(:disabled) {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.2);
+  color: var(--cyan);
+}
+
+.tx-table__pages button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

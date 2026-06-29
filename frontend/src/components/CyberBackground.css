@@ -1,0 +1,130 @@
+.cyber-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cyber-bg__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #060a14 0%, #0a1020 40%, #0d1528 70%, #060a14 100%);
+}
+
+.cyber-bg__radial {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: radial-drift 20s ease-in-out infinite alternate;
+}
+
+.cyber-bg__radial--1 {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+}
+
+.cyber-bg__radial--2 {
+  width: 500px;
+  height: 500px;
+  bottom: -15%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  animation-delay: -10s;
+}
+
+@keyframes radial-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.05); }
+}
+
+.cyber-bg__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 80%);
+  animation: grid-shift 30s linear infinite;
+}
+
+@keyframes grid-shift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(60px); }
+}
+
+.cyber-bg__map {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 500'%3E%3Cpath fill='%2300d4ff' d='M150,200 Q200,180 250,200 T350,190 T450,210 T550,195 T650,205 T750,190 T850,200'/%3E%3Ccircle cx='200' cy='180' r='3' fill='%2300d4ff'/%3E%3Ccircle cx='400' cy='200' r='2' fill='%2300d4ff'/%3E%3Ccircle cx='600' cy='195' r='3' fill='%2300d4ff'/%3E%3Ccircle cx='800' cy='205' r='2' fill='%2300d4ff'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+}
+
+.cyber-bg__circuit {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cpath d='M0 50 H80 V0 M120 0 V50 H200 M0 150 H60 V200 M140 200 V150 H200' stroke='%2300d4ff' fill='none' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.cyber-bg__particles {
+  position: absolute;
+  inset: 0;
+}
+
+.cyber-bg__particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--cyan);
+  border-radius: 50%;
+  opacity: 0;
+  left: calc(var(--i) * 4.2%);
+  top: calc((var(--i) * 7) % 100%);
+  animation: particle-float 8s calc(var(--i) * 0.3s) ease-in-out infinite;
+}
+
+@keyframes particle-float {
+  0%, 100% { opacity: 0; transform: translateY(0); }
+  50% { opacity: 0.6; transform: translateY(-40px); }
+}
+
+.cyber-bg__connections {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+}
+
+.cyber-bg__connections svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cyber-line {
+  animation: line-pulse 4s ease-in-out infinite;
+}
+
+.cyber-line--delay { animation-delay: 1.5s; }
+.cyber-line--delay2 { animation-delay: 3s; }
+
+@keyframes line-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.cyber-node {
+  animation: node-glow 3s ease-in-out infinite;
+}
+
+@keyframes node-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
