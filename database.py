@@ -32,6 +32,19 @@ def create_database():
     )
     """)
 
+    # Incidents Table
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS incidents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_name TEXT NOT NULL,
+    severity TEXT NOT NULL,
+    root_cause TEXT NOT NULL,
+    confidence INTEGER NOT NULL,
+    timeline TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+""")
+
     conn.commit()
     conn.close()
 
