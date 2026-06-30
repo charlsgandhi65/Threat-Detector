@@ -7,6 +7,7 @@ import {
   HiOutlineChartBar,
   HiOutlineHeart,
   HiOutlineCog6Tooth,
+  HiOutlineDocumentMagnifyingGlass,
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
 } from 'react-icons/hi2';
@@ -18,6 +19,7 @@ const NAV_ITEMS = [
   { path: '/alerts', label: 'Threat Alerts', icon: HiOutlineBellAlert },
   { path: '/intelligence', label: 'Threat Intelligence', icon: HiOutlineShieldExclamation },
   { path: '/analytics', label: 'Analytics', icon: HiOutlineChartBar },
+  { path: '/incidents', label: 'Incident Investigation', icon: HiOutlineDocumentMagnifyingGlass },
   { path: '/health', label: 'System Health', icon: HiOutlineHeart },
   { path: '/settings', label: 'Settings', icon: HiOutlineCog6Tooth },
 ];

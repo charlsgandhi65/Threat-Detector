@@ -1,0 +1,46 @@
+.incident-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.incident-stats__card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.incident-stats__card > svg {
+  font-size: 1.5rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.incident-stats__card--critical > svg {
+  color: #f87171;
+}
+
+.incident-stats__value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.incident-stats__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 768px) {
+  .incident-stats {
+    grid-template-columns: 1fr;
+  }
+}

@@ -9,6 +9,7 @@ import IntelligencePage from './pages/IntelligencePage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import HealthPage from './pages/HealthPage';
 import SettingsPage from './pages/SettingsPage';
+import IncidentInvestigationPage from './pages/IncidentInvestigationPage';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="intelligence" element={<IntelligencePage />} />
             <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="incidents" element={<IncidentInvestigationPage />} />
             <Route path="health" element={<HealthPage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>

@@ -18,6 +18,10 @@ export function fetchStats() {
   return request('/stats');
 }
 
+export function fetchIncidents() {
+  return request('/incidents');
+}
+
 export async function checkApiHealth() {
   try {
     await fetchStats();
