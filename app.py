@@ -1,13 +1,19 @@
 from pathlib import Path
+import json
+import sqlite3
 
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
-import sqlite3
 
 BASE_DIR = Path(__file__).resolve().parent
 FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
 
-app = Flask(__name__, static_folder=str(FRONTEND_DIST / "assets"), static_url_path="/assets")
+app = Flask(
+    __name__,
+    static_folder=str(FRONTEND_DIST / "assets"),
+    static_url_path="/assets"
+)
+
 CORS(app)
 
 DATABASE_NAME = "database/transactions.db"
@@ -21,6 +27,7 @@ def get_connection():
 
 def serve_frontend():
     index_file = FRONTEND_DIST / "index.html"
+
     if index_file.exists():
         return send_from_directory(FRONTEND_DIST, "index.html")
 
@@ -29,13 +36,23 @@ def serve_frontend():
     })
 
 
+# --------------------------------------------------------
+# Frontend
+# --------------------------------------------------------
+
 @app.route("/")
 @app.route("/<path:path>")
 def home(path=""):
+
     if path.startswith("api/"):
-        return jsonify({"message": "Not found"}), 404
+        return jsonify({"message": "Not Found"}), 404
+
     return serve_frontend()
 
+
+# --------------------------------------------------------
+# Transactions API
+# --------------------------------------------------------
 
 @app.route("/api/transactions")
 @app.route("/transactions")
@@ -45,9 +62,13 @@ def transactions():
     cursor = conn.cursor()
 
     cursor.execute("""
+
         SELECT *
+
         FROM transactions
+
         ORDER BY id DESC
+
     """)
 
     data = [dict(row) for row in cursor.fetchall()]
@@ -56,6 +77,10 @@ def transactions():
 
     return jsonify(data)
 
+
+# --------------------------------------------------------
+# Alerts API
+# --------------------------------------------------------
 
 @app.route("/api/alerts")
 @app.route("/alerts")
@@ -65,9 +90,13 @@ def alerts():
     cursor = conn.cursor()
 
     cursor.execute("""
+
         SELECT *
+
         FROM alerts
+
         ORDER BY id DESC
+
     """)
 
     data = [dict(row) for row in cursor.fetchall()]
@@ -76,6 +105,10 @@ def alerts():
 
     return jsonify(data)
 
+
+# --------------------------------------------------------
+# Dashboard Stats API
+# --------------------------------------------------------
 
 @app.route("/api/stats")
 @app.route("/stats")
@@ -102,13 +135,60 @@ def stats():
     conn.close()
 
     return jsonify({
+
         "total": total,
         "safe": safe,
         "medium": medium,
         "high": high,
         "critical": critical
+
     })
 
+
+# --------------------------------------------------------
+# Incident Correlation API
+# --------------------------------------------------------
+
+@app.route("/api/incidents")
+@app.route("/incidents")
+def incidents():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+
+        SELECT *
+
+        FROM incidents
+
+        ORDER BY id DESC
+
+    """)
+
+    rows = cursor.fetchall()
+
+    data = []
+
+    for row in rows:
+
+        incident = dict(row)
+
+        try:
+            incident["timeline"] = json.loads(
+                incident["timeline"]
+            )
+        except:
+            incident["timeline"] = []
+
+        data.append(incident)
+
+    conn.close()
+
+    return jsonify(data)
+
+
+# --------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)

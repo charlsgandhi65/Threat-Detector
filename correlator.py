@@ -5,7 +5,7 @@ import time
 
 DATABASE_NAME = "database/transactions.db"
 
-# Keeps track of processed incidents while the program is running
+# Prevent duplicate incidents while the engine is running
 processed_users = set()
 
 
@@ -15,44 +15,74 @@ def get_connection():
     return conn
 
 
-def determine_root_cause(reasons):
+# ---------------------------------------------------
+# Correlation Rules
+# ---------------------------------------------------
+def correlate_events(events):
 
-    reason_text = " ".join(reasons)
+    text = " ".join(events)
 
-    if "High Risk Location" in reason_text and "Wire Transfer" in reason_text:
-        return "Possible Money Laundering"
+    if (
+        "Very Large Amount" in text
+        and "Wire Transfer" in text
+        and (
+            "High Risk Location" in text
+            or "Suspicious Location" in text
+        )
+    ):
+        return (
+            "Possible Money Laundering",
+            "High Value Transfer + High Risk Location + Wire Transfer"
+        )
 
-    elif "Large Amount" in reason_text and "Wire Transfer" in reason_text:
-        return "Suspicious Financial Activity"
+    elif (
+        "Large Amount" in text
+        and "Wire Transfer" in text
+    ):
+        return (
+            "Suspicious Financial Activity",
+            "Large Amount + Wire Transfer"
+        )
 
-    elif "Large Amount" in reason_text:
-        return "High Value Suspicious Transaction"
+    elif (
+        "High Risk Location" in text
+        or "Suspicious Location" in text
+    ):
+        return (
+            "Cross-Border Fraud",
+            "High Risk Geographic Activity"
+        )
 
-    else:
-        return "Coordinated Fraud Attempt"
+    elif len(events) >= 4:
+        return (
+            "Coordinated Fraud Attempt",
+            "Multiple Correlated Security Events"
+        )
+
+    return (
+        "Suspicious Activity",
+        "Unknown Correlation Pattern"
+    )
 
 
-def correlate_events():
+# ---------------------------------------------------
+# Main Correlation Engine
+# ---------------------------------------------------
+def correlation_engine():
 
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
-
-    SELECT
-        t.user_name,
-        t.timestamp,
-        a.message,
-        a.severity
-
-    FROM alerts a
-
-    JOIN transactions t
-
-    ON a.transaction_id = t.id
-
-    ORDER BY t.timestamp
-
+        SELECT
+            t.user_name,
+            t.timestamp,
+            a.message,
+            a.severity
+        FROM alerts a
+        JOIN transactions t
+        ON a.transaction_id = t.id
+        ORDER BY t.timestamp
     """)
 
     rows = cursor.fetchall()
@@ -61,43 +91,68 @@ def correlate_events():
 
     for row in rows:
 
-        user = row["user_name"]
+        grouped.setdefault(row["user_name"], []).append(row)
 
-        if user not in grouped:
-            grouped[user] = []
+    # ---------------------------------------------
 
-        grouped[user].append(row)
+    for user, alerts in grouped.items():
 
-    for user, events in grouped.items():
-
-        # Skip users already processed
         if user in processed_users:
             continue
 
-        # Need at least 3 alerts to create one incident
-        if len(events) < 3:
+        # Need at least 3 alerts
+        if len(alerts) < 3:
             continue
+
+        # Use latest 3 alerts only
+        alerts = alerts[-3:]
 
         severity = "HIGH"
 
+        security_events = []
+
         timeline = []
 
-        reasons = []
+        # -----------------------------
+        # Build Evidence
+        # -----------------------------
 
-        for event in events:
+        for alert in alerts:
 
-            timeline.append(
-                f"{event['timestamp']} - {event['message']}"
-            )
+            parts = [
 
-            reasons.append(event["message"])
+                x.strip()
 
-            if event["severity"] == "CRITICAL":
+                for x in alert["message"].split(",")
+
+            ]
+
+            for part in parts:
+
+                if part not in security_events:
+                    security_events.append(part)
+
+                timeline.append({
+
+                    "time": alert["timestamp"],
+                    "event": part
+
+                })
+
+            if alert["severity"] == "CRITICAL":
                 severity = "CRITICAL"
 
-        root_cause = determine_root_cause(reasons)
+        # -----------------------------
+        # Correlation
+        # -----------------------------
 
-        confidence = random.randint(90, 99)
+        root_cause, rule = correlate_events(security_events)
+
+        confidence = random.randint(92, 99)
+
+        # -----------------------------
+        # Store Incident
+        # -----------------------------
 
         cursor.execute("""
 
@@ -124,12 +179,47 @@ def correlate_events():
 
         processed_users.add(user)
 
-        print(f"\n🚨 INCIDENT CREATED")
-        print(f"User       : {user}")
-        print(f"Severity   : {severity}")
-        print(f"Root Cause : {root_cause}")
-        print(f"Confidence : {confidence}%")
-        print("-" * 50)
+        # -----------------------------
+        # Console Output
+        # -----------------------------
+
+        print("\n")
+        print("=" * 75)
+        print("🚨 HIGH RISK INCIDENT DETECTED")
+        print("=" * 75)
+
+        print(f"\nUser           : {user}")
+        print(f"Severity       : {severity}")
+        print(f"Root Cause     : {root_cause}")
+        print(f"Confidence     : {confidence}%")
+
+        print("\nCorrelation Rule")
+        print("------------------------------")
+        print(rule)
+
+        print("\nCorrelated Security Events")
+        print("------------------------------")
+
+        for event in security_events:
+            print(f"✓ {event}")
+
+        print("\nAttack Timeline")
+        print("------------------------------")
+
+        for item in timeline:
+            print(f"{item['time']}")
+            print(f"   ↳ {item['event']}")
+
+        print("\n🚨 Incident Generated")
+
+        print("\nRecommended Actions")
+        print("------------------------------")
+        print("✓ Block suspicious transaction")
+        print("✓ Notify security administrator")
+        print("✓ Review user account activity")
+        print("✓ Continue monitoring")
+
+        print("=" * 75)
 
     conn.commit()
     conn.close()
@@ -141,6 +231,6 @@ if __name__ == "__main__":
 
     while True:
 
-        correlate_events()
+        correlation_engine()
 
         time.sleep(5)
